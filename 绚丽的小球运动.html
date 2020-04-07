@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小球运动</title>
+</head>
+<body>
+<canvas id="canvas">您的历览器暂不支持</canvas>
+</body>
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d")
+    canvas.style.width = '1000px';
+    canvas.style.height = '600px';
+    canvas.style.backgroundColor = '#000'
+
+    class Ball{
+        constructor(x,y,color){
+            this.x= x;
+            this.y=y;
+            this.color = color;
+            this.i = 40
+        }
+        render(){
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,this.i,0,Math.PI*2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
+    var ball = new Ball(50,50,'red')
+    ball.render();
+
+
+    class MoveBall extends Ball{
+        constructor(x,y,color){
+            super(x,y,color);
+            this.x = dx
+        }
+    }
+</script>
+</html>
