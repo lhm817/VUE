@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--过滤器使用格式 被处理字符和处理器之间用|连接-->
+        <p>{{name | my-filter}}</p>
+        <!--多个过滤器可连接使用-->
+        <p>{{name | my-filter | my-filter2}}</p>
+        <!--区分局部和全局过滤器效果，在此处显然onwerFilter无效-->
+        <p>{{name | my-filter | onwerFilter}}</p>
+    </div>
+
+    <div id="app2">
+        <p>{{name | my-filter | onwerFilter}}</p>
+    </div>
+
+
+
+    <h3>过滤器练习时间格式化</h3>
+    <div id="app3">
+        <p>{{date | dateFormat1}}</p>
+        <p>{{date | dateFormat1('YYYY-MM-dd')}}</p>
+    </div>
+</body>
+<script>
+    /*
+    * 全局过滤器
+    * filter ,接收两个参数，第一个参数为过滤器名称，第二个为处置函数，函数中接收被处置的数据
+    * */
+    Vue.filter("my-filter",function (value) {
+        value = value.replace(/学院/g,"大学");
+        return value;
+    })
+
+    Vue.filter("my-filter2",function (value) {
+        console.log(value);
+        value = value.replace(/大学/,"幼儿园");
+        return value ;
+    })
+
+    let vue = new　Vue({
+        el:"#app",
+        data:{
+            name:"aaa学院  bbb学院  ccc学院"
+        }
+    })
+
+    let vue2 = new　Vue({
+        el:"#app2",
+        data:{
+            name:"aaa学院  bbb学院  ccc学院"
+        },
+        /*
+        * filters
+        * 局部过滤器
+        * */
+        filters:{
+            onwerFilter:function (value) {
+                console.log(value);
+                value = value.replace(/大学/,"博士后");
+                return value ;
+            }
+        }
+    })
+
+
+
+    Vue.filter("dateFormat1",function (value,format) {
+        console.log(value);
+        let date = new Date(value);
+        let year = date.getFullYear()+"";
+        let month = date.getMonth() + 1 +"";
+        let day = date.getDate()+"";
+        let hour = date.getHours()+"";
+        let minite = date.getMinutes()+"";
+        let second = date.getSeconds()+"";
+        if (format){
+            return year +"-"+month.padStart(2,"0") +"-"+day.padStart(2,"0");
+        }
+        return year +"-"+month.padStart(2,"0") +"-"+day.padStart(2,"0") +" "+hour.padStart(2,"0") +"-"+minite.padStart(2,"0") +"-"+second.padStart(2,"0");
+
+    })
+    let vue3 = new　Vue({
+        el:"#app3",
+        data:{
+            date:new Date()
+        },
+    })
+</script>
+</html>
