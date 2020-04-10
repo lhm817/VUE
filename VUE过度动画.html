@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #app div{
+            height: 100px;
+            width: 100px;
+            background-color: red;
+        }
+        .v-enter{
+            opacity: 0;
+        }
+        .v-enter-active{
+            transition: all 1s;
+        }
+        .v-enter-to{
+            opacity: 1;
+        }
+
+        .v-leave{
+            opacity: 1;
+        }
+        .v-leave-active{
+            transition: all 1s;
+        }
+        .v-leave-to{
+            opacity: 0;
+        }
+
+        .one-enter{
+            opacity: 0;
+        }
+        .one-enter-active{
+            transition: all 1s;
+        }
+        .one-enter-to{
+            opacity: 1;
+            transform: translateX(100px);
+
+        }
+
+        .two-enter{
+            opacity: 0;
+        }
+        .two-enter-active{
+            transition: all 1s;
+        }
+        .two-enter-to{
+            opacity: 1;
+            transform: translateY(100px);
+        }
+    </style>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<!--
+注意点：
+    1.一个transaction里面只能放一个元素，有多个元素需要过度动画则需要创建多个transation组件
+    2.如果元素默认显示，那么默认情况下一进入界面不显示过度动画效果，如果需要在第一次加载时候就加载过度动画，则只用在transaton组件上添加【appear】属性
+    3.如果多个元素需要执行过度动画，且过度动画效果不同，则只需要在transtion组件上增加name="XX" 在css中写对应name开头的动画效果
+
+    样式绑定的弊端：如.one 和 .two  ，界面最终效果不会停留在动画结束时的效果
+
+-->
+    <h3>class绑定动画</h3>
+    <div id="app">
+        <button @click="toggle">我是按钮</button>
+        <transition>
+            <div v-show="isShow"></div>
+        </transition>
+        <transition appear>
+            <div v-show="isShow"></div>
+        </transition>
+
+        <transition name="one">
+            <div v-show="isShow"></div>
+        </transition>
+
+        <transition name="two">
+            <div v-show="isShow"></div>
+        </transition>
+    </div>
+<script>
+    new　Vue({
+        el:"#app",
+        data:{
+            isShow:true
+        },
+        methods:{
+            toggle() {
+                this.isShow = !this.isShow
+            }
+        }
+    })
+</script>
+
+
+    <h3>钩子函数绑定动画</h3>
+<!--
+v-on:before-enter="beforeEnter"
+            v-on:enter="enter"
+            v-on:after-enter="afterEnter"
+            v-on:enter-cancelled="enterCancelled"
+
+            v-on:before-leave="beforeLeave"
+            v-on:leave="leave"
+            v-on:after-leave="afterLeave"
+            v-on:leave-cancelled="leaveCancelled"
+-->
+    <div id="app2">
+        <button @click="toggle">按钮</button>
+        <transation
+            v-on:before-enter="beforeEnter"
+            v-on:enter="enter"
+            v-on:after-enter="afterEnter">
+        <div v-show="isShow" style="height: 150px;width: 150px;background-color: green"></div>
+        </transation>
+    </div>
+    <script>
+    new　Vue({
+        el:"#app2",
+        data:{
+            isShow:false
+        },
+        methods:{
+            toggle() {
+                this.isShow = !this.isShow
+            },
+            enter(el){
+                el.style.opacity = 0;
+            },
+            beforeEnter(el,done){
+                el.style.transition = 'translateX(100px)'
+            },
+            afterEnter(el){
+                el.style.opacity = 1;
+            },
+        }
+    })
+</script>
+</body>
+
+</html>
