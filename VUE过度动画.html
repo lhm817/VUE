@@ -197,6 +197,89 @@
         }
     })
 </script>
+
+
+<style>
+    .a{
+        opacity: 0;
+    }
+    .b{
+        transition: all 3s;
+    }
+    .c{
+        opacity: 1;
+        margin-left: 500px;
+    }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+
+<h3>自定义动画类名 || 配合animate.css 使用</h3>
+<div id="app4">
+    <button @click="toggle">按钮</button>
+    <!--<transition
+        enter-class="a"
+        enter-active-class="b"
+        enter-to-class="c"
+    >-->
+
+    <!--animate.css-->
+    <transition
+    enter-active-class="animated bounceOutLeft"
+    >
+        <div style="height: 150px;width: 150px;background: aqua" v-show="isShow"></div>
+    </transition>
+</div>
+<script>
+    new Vue({
+        el:"#app4",
+        data:{
+            isShow:true
+        },
+        methods:{
+            toggle:function () {
+                this.isShow = !this.isShow;
+            }
+        }
+    })
+</script>
+
+<h3>多个元素添加动画</h3>
+<div id="app5">
+    <form action="">
+        <input type="text" v-model="name">
+        <input type="button" value="添加" @click.prevent="add">
+    </form>、
+    <ul>
+        <transition-group apper
+                enter-active-class="animated bounceOutLeft"
+        >
+            <li v-for="(p,i) in persons" :key="p.id">
+                <input type="checkbox">
+                <span>{{p.name}}</span>
+            </li>
+        </transition-group>
+
+    </ul>
+</div>
+<script>
+    new Vue({
+        el:"#app5",
+        data:{
+            persons:[{id:1,name:"zs"},{id:2,name:"ls"},{id:3,name:"ww"}],
+            name:""
+        },
+        methods:{
+            add:function () {
+                let lastP = this.persons[this.persons.length-1]
+                let p= {name:this.name}
+                p.id = lastP.id+1
+                // this.persons.unshift(p)
+                this.persons.push(p)
+                this.name =""
+            }
+        }
+    })
+</script>
 </body>
 
 </html>
