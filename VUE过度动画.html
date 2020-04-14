@@ -248,10 +248,15 @@
     <form action="">
         <input type="text" v-model="name">
         <input type="button" value="添加" @click.prevent="add">
-    </form>、
-    <ul>
+    </form>
+<!--    <ul>-->
+        <!--
+        动画组注意点：
+            1.动画组默人情况下会将动画的元素包裹在一个span当中，如果要自己制定包裹的元素，可用 tag='XX'来指定
+            2.动画组的动画错乱一般是元素绑定的key重复        -->
         <transition-group apper
                 enter-active-class="animated bounceOutLeft"
+                tag="ul"
         >
             <li v-for="(p,i) in persons" :key="p.id">
                 <input type="checkbox">
@@ -259,7 +264,7 @@
             </li>
         </transition-group>
 
-    </ul>
+<!--    </ul>-->
 </div>
 <script>
     new Vue({
