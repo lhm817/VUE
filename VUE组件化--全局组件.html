@@ -7,13 +7,19 @@
 </head>
 <body>
 <div id="app">
+    <button @click="myFn">vue中使用方法</button>
+    <p>{{abcMsg}}</p>
     <abc></abc>
     <abc2></abc2>
     <abc3></abc3>
-    <abc4></abc4>
+<!--    <abc4></abc4>-->
     <abc5></abc5>
+<!--    在此处使用asdf不生效-->
+<!--    <asdf></asdf>-->
 </div>
-
+<div id="app2">
+    <asdf></asdf>
+</div>
 </body>
 <script id="info" type="text/html">
     <div>
@@ -22,6 +28,18 @@
     </div>
 </script>
 <template id="info2">
+    <div>
+        <img src="img/orange.jpg"  height="150" alt="">
+        <!--
+      由于我们实在自定义组件中使用方法，所以需要在自定义组件中实现方法
+      -->
+        <button @click="myFn1">自定义组件中使用方法</button>
+        <p>{{abcMsg5}}</p>
+        <p>vue最简创建组件方法</p>
+    </div>
+</template>
+
+<template id="info3">
     <div>
         <img src="img/orange.jpg"  height="150" alt="">
         <p>vue最简创建组件方法</p>
@@ -66,12 +84,43 @@
     })
 
     //④
-    Vue.component("abc4",{template:"#info"})
+    // Vue.component("abc4",{template:"#info"})
     //⑤
-    Vue.component("abc5",{template:"#info2"})
+    Vue.component("abc5",{
+        template:"#info2",
+        methods: {
+            myFn1(){
+                alert("myFn1")
+            }
+        },
+        data:function () {
+            return {
+                abcMsg5:"在自定义组件中使用data数据,data不能直接写一个对象，必须是个函数，故而只能return一个对象返回值来赋值这些数据"
+            }
+        }
+    })
 
     let vue = new Vue({
-        el:"#app"
+        el:"#app",
+        data:{
+            abcMsg:"在vue中直接使用data数据"
+        },
+        methods:{
+            myFn(){
+                alert("myFn")
+            }
+        }
+    })
+
+
+    //=============================局部组件======================
+    let vue2 = new Vue({
+        el:"#app2",
+        components:{
+            asdf:{
+                template:"#info3"
+            }
+        }
     })
 
     </script>
