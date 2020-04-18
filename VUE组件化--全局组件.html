@@ -4,6 +4,30 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="js/vue.js"></script>
+    <style>
+        .v-enter{
+            opacity: 0;
+            margin-left: 500px;
+        }
+        .v-enter-active{
+            transition: all 1s;
+        }
+        .v-enter-to{
+            opacity: 1;
+        }
+
+        .v-leave{
+            opacity: 1;
+        }
+        .v-leave-active{
+            transition: all 1s;
+            margin-left: 50px;
+        }
+        .v-leave-to{
+            opacity: 0;
+        }
+
+    </style>
 </head>
 <body>
 <div id="app">
@@ -123,5 +147,72 @@
         }
     })
 
-    </script>
+</script>
+
+
+
+
+<h3>===========组件切换=============</h3>
+<div id="app3">
+    <p><button @click="toggle">切换</button></p>
+<!--    <p v-if="isShow">这是一个首页 <input type="checkbox"></p>
+    <p v-else><img src="img/orange.jpg" height="150" alt=""></p>
+
+    <tt31 v-if="isShow"></tt31>
+    <tt32 v-else></tt32>-->
+
+
+    <h4>---动态组件----</h4>
+ <!--   <component :is="name"></component>-->
+    <!--
+    由上述例子中可以看出，用v-if 或者动态组件渲染，均不会记录checkbox的操作状态
+    解决这一问题，需要将动态组件结合keep-alive使用
+    -->
+<!--    <keep-alive>
+        <component :is="name"></component>
+    </keep-alive>-->
+
+
+    <h4>---组件过渡动画----</h4>
+<!--
+注意点：默认情况下动画都是同时执行，要先离开再进入或先进入在离开可用mode来指定【动画模型】
+-->
+    <transition mode="out-in">
+        <component :is="name"></component>
+    </transition>
+
+</div>
+
+<template id="t-3-1">
+    <div>
+        <p>我是组件的首页</p>
+        <input type="checkbox">
+    </div>
+</template>
+<template id="t-3-2">
+    <p><img src="img/orange.jpg" height="150" alt=""></p>
+</template>
+
+<script>
+    Vue.component("tt31",{template:"#t-3-1"})
+    Vue.component("tt32",{template:"#t-3-2"})
+    new Vue({
+        el:"#app3",
+        data:{
+            isShow:true,
+            name:"tt31"
+        },
+        methods:{
+            toggle(){
+                this.isShow = !this.isShow;
+                this.name = this.name=="tt31"?"tt32":"tt31"
+            }
+        }
+    })
+</script>
+
+
+
+
+</body>
 </html>
