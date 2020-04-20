@@ -212,6 +212,88 @@
 </script>
 
 
+<h3>=====================父子组件==================</h3>
+<div id="app4">
+    <father>
+    </father>
+<!--    <son></son>-->
+</div>
+
+<template id="father">
+    <div>
+        <button @click="say">父组件按钮</button>
+        <p>父组件内容</p>
+        <p>{{param}}</p>
+<!--        <p>{{name}}</p>-->
+<!--        <p>{{age}}</p>-->
+        <son v-bind:fname="name" v-bind:fage="age" @parentsay="say"></son>
+    </div>
+</template>
+
+<template id="son">
+    <div>
+        <button @click="sSay">子组件按钮</button>
+        <p>子组件内容</p>
+        <p>{{fname}}</p>
+        <p>{{fage}}</p>
+
+    </div>
+</template>
+
+<script>
+    // Vue.component("son",{
+    //     template:"#son",
+    //
+    // })
+
+    Vue.component("father",{
+        template:"#father",
+        data:function () {
+            return {
+                name:"父组件的name属；",
+                age:"28",
+                param:""
+            }
+        },
+        methods:{
+            say:function (param) {
+                if (param)this.param = param
+                alert(12344555)
+            }
+        },
+        components: {
+            "son":{
+                template:"#son",
+                /*
+                * 父组件向子组件传递数值，只需在调用子组件时v-bind进行绑定，在子组件中用props进行接收
+                *
+                * */
+                props:['fname','fage'],
+                methods:{
+                    /*
+                    * 和传递数据不同，如果传递的是方法，子组件不需要再prop中接受，需要再子组件中自定义个一个方法，然后再子组件中直接使用自定义的方法
+                    *在自定义方法中使用$emit("自定义传递名称“)触发父组件的方法
+                    * */
+                    sSay:function () {
+                        // alert(123)
+                        /*
+                        * $emit 第一个参数 调用的方法
+                        * $emit 后续参数 传递给方法的参数
+                        *
+                        * 注意：vue中传递方法不可以写大写，否则会解析错误，如parentSay 可能被解析成parent-say
+                        * */
+                        // this.$emit("parentsay")
+                        this.$emit("parentsay","子元素传递过来的值");
+                    }
+                }
+            }
+        }
+    })
+
+    new Vue({
+        el:"#app4"
+    })
+</script>
 
 
 </body>
