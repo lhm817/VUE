@@ -296,5 +296,79 @@
 </script>
 
 
+
+<h3>================组件插槽===========</h3>
+<div id="app5">
+    <father5></father5>
+</div>
+<template id="father5">
+    <div>
+        <p>我是父组件</p>
+        <son5>
+            <p>子组件匿名插槽替换内容1</p>
+            <p>子组件匿名插槽替换内容2</p>
+
+            <p slot="one">子组件具名替换内容</p>
+
+            <!--使用v-slot指令；v-slot指令只能放在template 插件中使用 可简写为#-->
+<!--            <template v-slot:one>-->
+            <template #one>
+                <p>子组件使用v-slot 指令替换11</p>
+                <p>子组件使用v-slot 指令替换22</p>
+            </template>
+
+            <!--
+            作用域插槽，子组件提供数据，父组件决定如何渲染
+            父组件通过 aaa 来接收子组件暴露给自己的数据-->
+            <template slot-scope="aaa">
+                <p>父组件调用匿名子组件暴露给自己的数据:{{aaa.names}}</p>
+                <li v-for="(name,index) in aaa.names">{{name}}</li>
+            </template>
+
+            <!--
+            使用v-slot 指令来接收数据
+            匿名子组件也有自己名字，default
+            -->
+            <template v-slot:two="bbb">
+                <p>父组件调用具名子组件暴露给自己的数据:{{bbb.snames}}</p>
+                <li v-for="(name,index) in bbb.snames">{{name}}</li>
+            </template>
+        </son5>
+    </div>
+</template>
+<template id="son5">
+    <div>
+        <p>我是子组件</p>
+        <!--多个匿名插槽，填充内容就会被拷贝多份-->
+        <slot>子组件默认内容1</slot>
+        <slot>子组件默认内容2</slot>
+
+        <slot name="one">子组件具名默认内容</slot>
+
+        <p>子组件使用自身数据：{{names}}</p>
+
+        <slot v-bind:names="names">匿名插槽子组件向父组件暴露自己的数据</slot>
+        <slot name="two" v-bind:snames="names">具名子组件向父组件暴露自己的数据</slot>
+
+    </div>
+</template>
+<script>
+    Vue.component("father5",{
+        template:"#father5",
+
+        components:{
+            "son5":{
+                template:"#son5",
+                data:function () {
+                    return {
+                        names:["张三","李四","王五"]
+                    }
+                }
+            }
+        }
+    })
+    new Vue({el:"#app5"})
+</script>
+
 </body>
 </html>
