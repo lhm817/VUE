@@ -3,8 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="js/vue.js"></script>
 </head>
 <body>
+    <div id="app">
+        <parent></parent>
+    </div>
+    <template id="parent">
+        <div>
+            <p>我是父组件</p>
+            <!--
+                组件可以直接使用自己的数据
+            -->
+            <p>{{name}}</p>
+            <p>{{age}}</p>
+            <!--
+                这里通过:parentname 将父组件的 name 传递给了子组件
+            -->
+            <son :parentname="name" :parentage="age"></son>
+        </div>
+    </template>
 
+    <template id="son">
+        <div>
+            <p>我是子组件,使用父组件传递的参数</p>
+            <!--
+                这里通过parentname 使用父组件传递过来的数据
+            -->
+            <p>{{parentname}}</p>
+            <p>{{parentage}}</p>
+        </div>
+    </template>
+
+    <script type="text/javascript">
+        Vue.component("parent",{
+            template: "#parent",
+            data:function (){
+                return {
+                    name:"恨晨光之熹微",
+                    age:23
+                }
+            },
+            components: {
+                "son":{
+                    template:"#son",
+                    /*
+                    * 这里通过 parentname 接收父组件传递过来的数据
+                    * */
+                    props:["parentname","parentage"]
+                }
+            }
+        })
+
+
+        let vue = new Vue({
+            el:"#app",
+            data:{
+
+            },
+            methods:{
+
+            },
+            computed:{
+
+            },
+        })
+    </script>
 </body>
 </html>
