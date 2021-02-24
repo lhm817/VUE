@@ -21,6 +21,9 @@
                 这里通过:parentname 将父组件的 name 传递给了子组件
             -->
             <son :parentname="name" :parentage="age"></son>
+
+            <button @click="say">父级直接调用父级的方法</button>
+            <son2 @parentSay="say"></son2>
         </div>
     </template>
 
@@ -35,6 +38,12 @@
         </div>
     </template>
 
+    <template id="son2">
+        <div>
+            <button>我是父级组件，接收子组件传递的参数</button>
+        </div>
+    </template>
+
     <script type="text/javascript">
         Vue.component("parent",{
             template: "#parent",
@@ -44,13 +53,27 @@
                     age:23
                 }
             },
+            methods: {
+              "say":function (param){
+                  alert(param)
+              }
+            },
             components: {
                 "son":{
                     template:"#son",
                     /*
                     * 这里通过 parentname 接收父组件传递过来的数据
                     * */
-                    props:["parentname","parentage"]
+                    props:["parentname","parentage"],
+
+                },
+                "son2": {
+                    template:"#son2",
+                    methods:{
+                        sonFn:function (){
+                            this.$emit("parentSay","人间不值得")
+                        }
+                    }
                 }
             }
         })
