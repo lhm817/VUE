@@ -23,7 +23,7 @@
             <son :parentname="name" :parentage="age"></son>
 
             <button @click="say">父级直接调用父级的方法</button>
-            <son2 @parentSay="say"></son2>
+            <son2 @parentsay="say"></son2>
         </div>
     </template>
 
@@ -40,7 +40,7 @@
 
     <template id="son2">
         <div>
-            <button>我是父级组件，接收子组件传递的参数</button>
+            <button @click="sonFn">我是子组件，传递参数且调用父级方法</button>
         </div>
     </template>
 
@@ -55,6 +55,7 @@
             },
             methods: {
               "say":function (param){
+                  console.log(param);
                   alert(param)
               }
             },
@@ -71,7 +72,7 @@
                     template:"#son2",
                     methods:{
                         sonFn:function (){
-                            this.$emit("parentSay","人间不值得")
+                            this.$emit("parentsay","人间不值得")
                         }
                     }
                 }
