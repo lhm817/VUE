@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #app{
+            width: 800px;
+            margin: 50px auto;
+        }
+        table{
+            width: 100%;
+            background: slategrey;
+            border-spacing: 1px;
+
+        }
+        table th,table td{
+            background: white;
+        }
+        table input[disabled]{
+            border: none;
+            background: white;
+        }
+        form{
+            width: 100%;
+            line-height: 50px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <form action="" v-show="isShow">
+            <input type="text" placeholder="请输入学生姓名" v-model="person.name">
+            <input type="text" placeholder="请输入学生成绩" v-model="person.score">
+
+            <input type="submit" value="新增" @click.prevent="add">
+            <input type="button" value="查询" @click.prevent="query">
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>姓名</th>
+                    <th>成绩</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(stu,index) in students">
+                <td>{{index+1}}</td>
+                <td><input type="text" v-model="stu.name" :disabled="isDisabled"></td>
+                <td><input type="text"v-model="stu.score" :disabled="isDisabled"></td>
+                <td><input type="text" :value="stu.date | dateFormat('YYYY-MM-dd')" :disabled="true"></td>
+                <td>
+                    <a href="#" @click.prevent="edit">编辑</a>
+                    <a href="#" @click.prevent="del(index)">删除</a>
+                    <a href="#" @click.prevent="toggle">更多操作</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    Vue.filter("dateFormat",function (value,format) {
+        let date = new Date(value);
+        let year = date.getFullYear()+"";
+        let month = date.getMonth() + 1 +"";
+        let day = date.getDate()+"";
+        let hour = date.getHours()+"";
+        let minite = date.getMinutes()+"";
+        let second = date.getSeconds()+"";
+        if (format){
+            return year +"-"+month.padStart(2,"0") +"-"+day.padStart(2,"0");
+        }
+        return year +"-"+month.padStart(2,"0") +"-"+day.padStart(2,"0") +" "+hour.padStart(2,"0") +"-"+minite.padStart(2,"0") +"-"+second.padStart(2,"0");
+
+    })
+    new　Vue({
+        el:"#app",
+        data:{
+            isDisabled:true,
+            isShow:false,
+            person:{
+              name:"",
+              score:""
+            },
+            students:[
+                {
+                    id:"1",
+                    name:"张三",
+                    score:"99",
+                    date:Date.now()
+                },
+                {
+                    id:"2",
+                    name:"李四",
+                    score:"88",
+                    date:Date.now()
+                },
+                {
+                    id:"3",
+                    name:"王五",
+                    score:"77",
+                    date:Date.now()
+                }
+            ]
+        },
+        methods:{
+            edit(){
+                this.isDisabled = !this.isDisabled;
+            },
+            toggle(){
+                this.isShow = !this.isShow;
+            },
+            del(index){
+                console.log(index);
+                this.students.splice(index,1)
+            },
+            add(){
+                this.person.date = Date.now();
+                this.students.push(this.person);
+                this.person = {
+                    name:"",
+                    score:""
+                }
+            },
+            query(){
+                let newStudents = this.students.filter((stu) => {
+                    if (this.person.name!=undefined && stu.name.indexOf(this.person.name) == -1){
+                        return false;
+                    }
+                    if (this.person.score!=undefined && stu.score != this.person.score){
+                        return false;
+                    }
+                    return true;
+                })
+                this.students = newStudents;
+            }
+        }
+    })
+</script>
+</html>

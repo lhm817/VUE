@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h4>计算属性</h4>
+        <p>{{name}}</p>
+        <p>{{age+1}}</p>
+        <p>{{msg.split("").reverse().join("")}}</p>
+        <!--
+            综上：插值方法可以在里面书写合法的js代码，但无提示，但不合适写过于复杂的逻辑，故而需要computed对值进行计算（执行复杂操作）
+            注意点：msg2虽然是一个执行函数的返回值，但其为一个属性，在插值获取时切不能加上括号
+        -->
+        <p>{{msg2}}</p>
+        <p>-------methods 和 computed 的区别</p>
+        <p>{{msg2}}</p>
+        <p>{{msg1()}}</p>
+        <p>{{msg1()}}</p>
+        <!--
+            综上：methods 每次调用都会被执行，而computed会将计算机结果进行缓存，如果计算结果不发生变化，将不会重复执行
+            故，在开发过程中，如果数据需要经常变动，则使用methods,否则computed
+        -->
+
+    </div>
+</body>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            name:"lhmy呀",
+            age:18,
+            msg:"abcdef"
+        },
+        methods:{
+          msg1(){
+              console.log("msg1被执行")
+              let msg = this.msg.split("").reverse().join("");
+              return msg;
+          }
+        },
+        computed:{
+            msg2:function () {
+                console.log("msg2被执行")
+                let msg = this.msg.split("").reverse().join("");
+                return msg;
+            }
+        }
+    })
+</script>
+</html>
