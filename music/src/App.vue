@@ -1,15 +1,24 @@
 <template>
   <div id="app">
-    <div class="test"></div>
-    <p>这里是个段落</p>
+    <Header></Header>
+    <tabbar></tabbar>
+    <router-view></router-view>
   </div>
 </template>
-
-<style lang="scss">
-  .test{
-    height: 100px;
-    width: 100px;
-    background-color: red;
-    transform: translateY(100px);
+<script>
+import Header from './components/Header'
+import Tabbar from './components/Tabbar'
+export default {
+  name: 'App',
+  components: {
+    Header,
+    Tabbar
+  },
+  methods: {
   }
+}
+</script>
+<style lang="scss">
+@import "assets/css/variable";
+
 </style>
