@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <!--可以让部分国产浏览器默认采用高速模式渲染页面-->
+      <meta name="renderer" content="webkit">
+        <!-- 为了让IE浏览器运行最新的渲染模式下    -->
+      <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <!--SEO三大标签      -->
+      <title>网易云音乐</title>
+      <meta name="keywords" content="网易云音乐，音乐，播放器，网易，下载，播放，DJ,免费，明星，精选，歌单">
+      <meta name="description" content="网易云音乐是一款专注于发现与分享的音乐产品，依托于专业音乐人、DJ、好友">
+    <!--
+      apple-touch-icon :是苹果的私有属性
+      作用：指定将网页保存到主屏幕上的时候的图标
+      -->
+      <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="114*114" href="./apple-touch-icon114.png">
+      <link rel="apple-touch-icon" sizes="152*152" href="./apple-touch-icon153.png">
+      <link rel="apple-touch-icon" sizes="180*180" href="./apple-touch-icon180.png">
+    <!--网页浏览器快捷图标      -->
+      <link rel="icon" href="./favicon.ico">
+      <script type="text/javascript">
+          let scale = 1.0 / window.devicePixelRatio;
+          let text = `<meta name="viewport" content="width=device-width, initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}, user-scalable=no">`;
+          document.write(text);
+          document.documentElement.style.fontSize = window.innerWidth / 7.5 + "px";
+          document.documentElement.setAttribute('data-dpr', window.devicePixelRatio + '');
+          document.documentElement.setAttribute('data-theme', 'theme');
+      </script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+
+<!--
+1.初始化html中的一些代码（head中meta link的各种设置）
+
+2.利用rem视口释放的方式，来适配移动端
+注意点：如果在html文件中用到了字符串模板，字符串模板中用到了变量，那么html-plugin是无法处理的，所以会报错
+       如果想解决这个问题，那么我们需要再借助一个loader，html-loader(https://www.npmjs.com/ 搜索 html-loader 安装指令：npm i -D htlm-loader 或  npm install --save-dev html-loader )
+
+3.借助postcss-pxtorem 实现自动将px转换为rem  (安装指令：npm i -D postcss-pxtorem)
+
+4.借助webpack 实现css3/ES678语法兼容（对.browserslistrc进行浏览器兼容配置）
+
+5.借助fastclick 解决移动端100-300ms的点击延迟 npm install fastclick  ,在main.js 中进行导入，并执行fastclick.attach(document.body)
+
+6.初始化默认的全局样式
+注意点：在移动端开发中，一般情况我们不需要使字体随屏幕大小的变化而变化
+       由于我们是通过视口缩放来适配移动端的，因此我们不能直接设置字体的大小，否则字体的大小就会随着屏幕的变大而变大，屏幕的变小而变小
+
+
+7.将项目纳入version 管理
+    vcs -- enable version control integration... --- git --- ok
+
+-->
+
+
+
