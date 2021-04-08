@@ -3,7 +3,5 @@ import NetWork from './netWork'
 
 export const getBanner = () => NetWork.get('banner?type=2')
 export const getPersonalized = () => NetWork.get('personalized?limit=6') // limit 可选，默认30
-export const getNewAlbum = () => NetWork.get('album/newest')
-export const getNewSong = () => NetWork.get('personalized/newsong')
-export const getPlayList = (data) => NetWork.get('playlist/detail', data)
-export const getAlbum = (data) => NetWork.get('album', data)
+export const getNewAlbum = () => NetWork.get('/album/newest')
+export const getNewSong = () => NetWork.get('/personalized/newsong')
