@@ -46,7 +46,7 @@ const routes = [
     component: Recommend,
     children: [
       {
-        path: 'detail/:id/:type',
+        path: 'detail/:id',
         component: Detail
       }
     ]

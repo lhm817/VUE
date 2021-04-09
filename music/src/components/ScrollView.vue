@@ -12,7 +12,6 @@ export default {
     this.iscroll = new IScroll(this.$refs.wrapper, {
       onmousewheel: true,
       scrollbars: false,
-      probeType: 3, // 像素级的触发
       // 解决拖拽卡顿问题
       scrollX: false,
       scrollY: true,
@@ -52,14 +51,6 @@ export default {
     * 第二个参数：告诉观察者对象我们需要观察什么内容
     * */
     observer.observe(this.$refs.wrapper, config)
-  },
-  methods: {
-    // 提供一个监听滚动距离的方法给外界
-    scrolling (fn) {
-      this.iscroll.on('scroll', function () {
-        fn(this.y)
-      })
-    }
   }
 }
 </script>
