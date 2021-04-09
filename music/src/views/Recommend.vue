@@ -1,8 +1,14 @@
 <template>
   <div class="recommend">
-    <Banner :banners="banners"></Banner>
-    <Personalized :personalized="personalized" :title="'推荐歌单'"></Personalized>
-    <Personalized :personalized="albums" :title="'最新专辑'"></Personalized>
+    <ScrollView>
+      <div>
+        <Banner :banners="banners"></Banner>
+        <Personalized :personalized="personalized" :title="'推荐歌单'" @select="fatherSelectItem"></Personalized>
+        <Personalized :personalized="albums" :title="'最新专辑'"></Personalized>
+        <SongList :songs="songs"></SongList>
+      </div>
+    </ScrollView>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -11,11 +17,15 @@ import { getBanner, getPersonalized, getNewAlbum, getNewSong } from '../api/inde
 
 import Banner from '../components/Banner'
 import Personalized from '../components/Personalized'
+import SongList from '../components/SongList'
+import ScrollView from '../components/ScrollView'
 export default {
   name: 'Recommend',
   components: {
     Banner,
-    Personalized
+    Personalized,
+    SongList,
+    ScrollView
   },
   data: function () {
     return {
@@ -56,10 +66,25 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
+  },
+  methods: {
+    fatherSelectItem (id) {
+      this.$router.push({
+        // path: '/recommend/detail/${id}'
+        path: `/recommend/detail/${id}`
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
-
+  .recommend{
+    position: fixed;
+    top: 184px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
 </style>
