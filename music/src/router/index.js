@@ -13,6 +13,12 @@ const Recommend = (resolve) => {
   })
 }
 
+const Detail = (resolve) => {
+  import('../views/Detail').then((module) => {
+    resolve(module)
+  })
+}
+
 const Singer = (resolve) => {
   import('../views/Singer').then((module) => {
     resolve(module)
@@ -35,7 +41,16 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/recommend' },
-  { path: '/recommend', component: Recommend },
+  {
+    path: '/recommend',
+    component: Recommend,
+    children: [
+      {
+        path: 'detail/:id',
+        component: Detail
+      }
+    ]
+  },
   { path: '/singer', component: Singer },
   { path: '/rank', component: Rank },
   { path: '/search', component: Search }

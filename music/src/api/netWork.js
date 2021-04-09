@@ -8,7 +8,7 @@ axios.defaults.timeout = 3000
 export default {
   get: function (path = '', data = {}) {
     return new Promise(function (resolve, reject) {
-      axios.get(path, data).then(function (response) {
+      axios.get(path, { params: data }).then(function (response) {
         resolve(response.data)
       }).catch(function (error) {
         reject(error)

@@ -30,7 +30,8 @@ export default {
     display: flex;
     justify-content: space-around;
     @include bg_sub_color;
-
+    //position: relative;
+    //z-index: 9999;
     .item{
       span{
         line-height: 84px;
