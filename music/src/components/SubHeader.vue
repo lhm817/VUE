@@ -1,5 +1,5 @@
 <template>
-  <div class="header" @click="changeTheme">
+  <div class="sub-header" @click="changeTheme">
     <div class="header-left" @click.stop="back"></div>
     <p class="header-title">{{title}}</p>
     <div class="header-right"></div>
@@ -40,7 +40,7 @@ export default {
 <style lang="scss">
 @import "../assets/css/variable";
 @import "../assets/css/mixin";
-.header {
+.sub-header {
   height: 100px;
   width: 100%;
   //background-color: red;
