@@ -6,3 +6,4 @@ export const getPersonalized = () => NetWork.get('personalized?limit=6') // limi
 export const getNewAlbum = () => NetWork.get('album/newest')
 export const getNewSong = () => NetWork.get('personalized/newsong')
 export const getPlayList = (data) => NetWork.get('playlist/detail', data)
+export const getAlbum = (data) => NetWork.get('album', data)
