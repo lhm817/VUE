@@ -59,8 +59,15 @@ export default {
     const detaultHeiht = this.$refs.top.$el.offsetHeight
     this.$refs.scrollview.scrolling((offsetY) => {
       if (offsetY < 0) { // 上推变模糊
-        const scale = 20 * Math.abs(offsetY) / detaultHeiht
-        this.$refs.top.$el.style.filter = `blur(${scale}px)`
+        // const scale = 20 * Math.abs(offsetY) / detaultHeiht
+        /*
+        * 注意点：高斯模糊效果是非常消耗性能的，不推荐在移动端中使用
+        *        如果非要在移动端中使用，那么建议只设置一次
+        * */
+        // this.$refs.top.$el.style.filter = `blur(${scale}px)`
+
+        const scale = Math.abs(offsetY) / detaultHeiht
+        this.$refs.top.changeMask(scale)
       } else { // 下拉放大图片
         const scale = 1 + offsetY / detaultHeiht
         this.$refs.top.$el.style.transform = `scale(${scale})`
